@@ -4,425 +4,548 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>StudySnap — Mechanics</title>
+    <title>StudySnap</title>
 
     <style>
-        /*
-         * MECHANICS VERSION
-         * No visual atmosphere is being designed here.
-         * The goal is clarity and behavior.
-         */
+        /* =========================
+           RESET
+        ========================= */
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
+
+        /* =========================
+           PAGE
+        ========================= */
 
         body {
-            margin: 0;
-            padding: 40px;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
 
-            background: white;
-            color: black;
+            color: #234238;
 
-            font-family: Arial, Helvetica, sans-serif;
+            /* Soft green atmosphere */
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(180, 220, 195, 0.45),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(205, 230, 215, 0.55),
+                    transparent 40%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f3f8f4,
+                    #e8f2eb
+                );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 40px 20px;
+
+            overflow-x: hidden;
         }
 
-        main {
-            width: min(800px, 100%);
-            margin: 0 auto;
+        /* =========================
+           BACKGROUND ATMOSPHERE
+        ========================= */
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
         }
 
-        h1 {
-            margin-bottom: 8px;
+        body::before {
+            width: 420px;
+            height: 420px;
+
+            top: -180px;
+            right: -120px;
+
+            background: rgba(166, 207, 183, 0.22);
+
+            filter: blur(10px);
         }
 
-        .description {
-            margin-bottom: 35px;
-            line-height: 1.5;
+        body::after {
+            width: 350px;
+            height: 350px;
+
+            bottom: -160px;
+            left: -100px;
+
+            background: rgba(190, 220, 203, 0.28);
+
+            filter: blur(10px);
         }
 
-        label {
+        /* =========================
+           MAIN APP
+        ========================= */
+
+        .app {
+            width: 100%;
+            max-width: 900px;
+
+            background: rgba(255, 255, 255, 0.78);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255, 255, 255, 0.8);
+
+            border-radius: 28px;
+
+            padding: 48px;
+
+            box-shadow:
+                0 20px 60px rgba(55, 90, 72, 0.10),
+                0 4px 16px rgba(55, 90, 72, 0.06);
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            margin-bottom: 42px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin-bottom: 12px;
+        }
+
+        .logo-mark {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background: #cfe7d7;
+
+            color: #315c4b;
+
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .logo h1 {
+            font-size: 25px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            color: #668077;
+
+            font-size: 15px;
+            line-height: 1.6;
+
+            max-width: 600px;
+        }
+
+        /* =========================
+           QUESTION AREA
+        ========================= */
+
+        .question-section {
+            margin-bottom: 28px;
+        }
+
+        .question-label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
+
+            margin-bottom: 10px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            color: #45675b;
         }
 
         textarea {
             width: 100%;
             min-height: 180px;
 
-            padding: 15px;
+            resize: vertical;
 
-            border: 1px solid black;
+            border: 1px solid #d3e4da;
+
+            border-radius: 18px;
+
+            background: rgba(250, 253, 251, 0.9);
+
+            padding: 20px;
 
             font-family: inherit;
             font-size: 16px;
 
-            resize: vertical;
+            color: #29463c;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
         }
 
-        button {
-            margin-top: 15px;
+        textarea::placeholder {
+            color: #9aada5;
+        }
 
-            padding: 12px 20px;
+        textarea:focus {
+            border-color: #9cc7ad;
 
-            border: 1px solid black;
-            background: white;
+            background: #ffffff;
+
+            box-shadow:
+                0 0 0 4px rgba(156, 199, 173, 0.16);
+        }
+
+        /* =========================
+           OPTIONS
+        ========================= */
+
+        .options {
+            display: flex;
+
+            gap: 12px;
+
+            margin-bottom: 28px;
+
+            flex-wrap: wrap;
+        }
+
+        .option {
+            border: 1px solid #d5e5db;
+
+            background: #f8fbf9;
+
+            color: #557267;
+
+            border-radius: 999px;
+
+            padding: 10px 17px;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition: all 0.2s ease;
+        }
+
+        .option:hover {
+            background: #eaf4ed;
+
+            border-color: #b8d4c1;
+
+            transform: translateY(-1px);
+        }
+
+        .option.active {
+            background: #d5eadc;
+
+            border-color: #a9cdb5;
+
+            color: #315c4b;
+        }
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .study-button {
+            width: 100%;
+
+            border: none;
+
+            border-radius: 16px;
+
+            padding: 16px 20px;
+
+            background: #78a98b;
+
+            color: white;
+
+            font-family: inherit;
 
             font-size: 16px;
+            font-weight: 600;
+
             cursor: pointer;
+
+            box-shadow:
+                0 8px 18px rgba(86, 130, 103, 0.18);
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
         }
 
-        button:hover {
-            background: #eeeeee;
+        .study-button:hover {
+            background: #6c9d7f;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 22px rgba(86, 130, 103, 0.22);
         }
 
-        #output {
-            display: none;
+        .study-button:active {
+            transform: translateY(0);
+        }
 
+        /* =========================
+           RESULT AREA
+        ========================= */
+
+        .result {
             margin-top: 35px;
-            padding-top: 25px;
 
-            border-top: 2px solid black;
+            padding: 26px;
+
+            border-radius: 20px;
+
+            background: #f2f8f4;
+
+            border: 1px solid #d9e9df;
+
+            display: none;
         }
 
-        #output.visible {
+        .result.visible {
             display: block;
         }
 
-        #output h2 {
-            margin-top: 0;
+        .result h2 {
+            font-size: 19px;
+
+            margin-bottom: 12px;
+
+            color: #315c4b;
         }
 
-        .response-section {
-            margin-top: 20px;
+        .result p {
+            color: #60766d;
+
+            line-height: 1.7;
+
+            font-size: 15px;
         }
 
-        .response-section h3 {
-            margin-bottom: 8px;
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            margin-top: 30px;
+
+            text-align: center;
+
+            color: #91a49d;
+
+            font-size: 12px;
         }
 
-        .response-section p {
-            line-height: 1.6;
-        }
+        /* =========================
+           MOBILE
+        ========================= */
 
-        .error {
-            margin-top: 15px;
-            font-weight: bold;
+        @media (max-width: 650px) {
+
+            body {
+                padding: 20px 12px;
+            }
+
+            .app {
+                padding: 28px 20px;
+
+                border-radius: 22px;
+            }
+
+            .header {
+                margin-bottom: 30px;
+            }
+
+            .logo h1 {
+                font-size: 22px;
+            }
+
+            textarea {
+                min-height: 150px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<main>
+    <main class="app">
 
-    <h1>StudySnap</h1>
+        <!-- HEADER -->
 
-    <p class="description">
-        Enter something you're working on and StudySnap will
-        turn it into a simple study response.
-    </p>
+        <header class="header">
 
+            <div class="logo">
 
-    <!-- =========================
-         INPUT LAYER
-    ========================== -->
+                <div class="logo-mark">
+                    ✦
+                </div>
 
-    <label for="question">
-        What are you working on?
-    </label>
+                <h1>StudySnap</h1>
 
-    <textarea
-        id="question"
-        placeholder="Type a homework question or topic..."
-    ></textarea>
+            </div>
 
-    <button id="helpButton">
-        Help me study
-    </button>
+            <p class="tagline">
+                A calm place to turn a question into something
+                you can actually understand.
+            </p>
 
-    <div
-        id="error"
-        class="error"
-    ></div>
+        </header>
 
 
-    <!-- =========================
-         OUTPUT LAYER
-    ========================== -->
+        <!-- QUESTION -->
 
-    <section id="output">
+        <section class="question-section">
 
-        <h2 id="responseTitle">
-            Study Response
-        </h2>
+            <label class="question-label" for="question">
+                What are you working on?
+            </label>
 
-        <div class="response-section">
+            <textarea
+                id="question"
+                placeholder="Paste a question, assignment, or topic here..."
+            ></textarea>
 
-            <h3>
-                What to focus on
-            </h3>
-
-            <p id="focusText"></p>
-
-        </div>
+        </section>
 
 
-        <div class="response-section">
+        <!-- STUDY OPTIONS -->
 
-            <h3>
-                Study approach
-            </h3>
+        <div class="options">
 
-            <p id="approachText"></p>
+            <button class="option active" type="button">
+                Study Guide
+            </button>
+
+            <button class="option" type="button">
+                Quiz Me
+            </button>
+
+            <button class="option" type="button">
+                Explain It
+            </button>
 
         </div>
 
 
-        <div class="response-section">
+        <!-- MAIN ACTION -->
 
-            <h3>
-                Check your understanding
-            </h3>
-
-            <p id="quizText"></p>
-
-        </div>
-
-    </section>
-
-</main>
+        <button class="study-button" type="button" onclick="startStudy()">
+            Help me study
+        </button>
 
 
-<script>
+        <!-- RESULT -->
 
-    /*
-     * =========================================
-     * INPUT LAYER
-     * =========================================
-     */
+        <section class="result" id="result">
 
-    const questionInput =
-        document.getElementById("question");
+            <h2>Let's work through it.</h2>
 
-    const helpButton =
-        document.getElementById("helpButton");
+            <p id="resultText">
+                Your study material will appear here.
+            </p>
 
-    const errorMessage =
-        document.getElementById("error");
+        </section>
 
 
-    /*
-     * =========================================
-     * OUTPUT LAYER
-     * =========================================
-     */
+        <!-- FOOTER -->
 
-    const output =
-        document.getElementById("output");
+        <footer class="footer">
+            StudySnap · A study companion
+        </footer>
 
-    const focusText =
-        document.getElementById("focusText");
-
-    const approachText =
-        document.getElementById("approachText");
-
-    const quizText =
-        document.getElementById("quizText");
+    </main>
 
 
-    /*
-     * =========================================
-     * PROCESSING LAYER
-     * =========================================
-     *
-     * This function takes the student's
-     * question and decides what type of
-     * response should be generated.
-     */
+    <script>
 
-    function processQuestion(question) {
+        /* =========================
+           OPTION BUTTONS
+        ========================= */
 
-        const lowerQuestion =
-            question.toLowerCase();
+        const options = document.querySelectorAll(".option");
 
+        options.forEach(option => {
 
-        /*
-         * Math detection
-         */
+            option.addEventListener("click", () => {
 
-        if (
-            lowerQuestion.includes("solve") ||
-            lowerQuestion.includes("equation") ||
-            lowerQuestion.includes("calculate") ||
-            lowerQuestion.includes("math")
-        ) {
+                options.forEach(button => {
+                    button.classList.remove("active");
+                });
 
-            return {
-                focus:
-                    "Identify the numbers, variables, and information the problem gives you before trying to solve it.",
+                option.classList.add("active");
 
-                approach:
-                    "Break the problem into smaller steps. Write down what you know, identify what you need to find, and choose the rule or formula that connects them.",
+            });
 
-                quiz:
-                    "Without looking at your notes, explain what the first step would be and why."
-            };
-
-        }
+        });
 
 
-        /*
-         * Science detection
-         */
+        /* =========================
+           TEMPORARY STUDY ACTION
+        ========================= */
 
-        if (
-            lowerQuestion.includes("biology") ||
-            lowerQuestion.includes("science") ||
-            lowerQuestion.includes("cell") ||
-            lowerQuestion.includes("organism") ||
-            lowerQuestion.includes("experiment")
-        ) {
-
-            return {
-                focus:
-                    "Identify the main concept, the important terms, and how they relate to each other.",
-
-                approach:
-                    "Start by defining the key idea in your own words. Then connect it to an example or process that demonstrates how it works.",
-
-                quiz:
-                    "Explain the main concept without looking at your notes. Then give one example."
-            };
-
-        }
-
-
-        /*
-         * History detection
-         */
-
-        if (
-            lowerQuestion.includes("history") ||
-            lowerQuestion.includes("war") ||
-            lowerQuestion.includes("revolution") ||
-            lowerQuestion.includes("empire") ||
-            lowerQuestion.includes("historical")
-        ) {
-
-            return {
-                focus:
-                    "Focus on the people, events, causes, effects, and time period involved.",
-
-                approach:
-                    "Put the major events into chronological order and identify how one event influenced the next.",
-
-                quiz:
-                    "What was one major cause of the event, and what happened as a result?"
-            };
-
-        }
-
-
-        /*
-         * General response
-         */
-
-        return {
-            focus:
-                "Identify the main question, the important terms, and what you already understand.",
-
-            approach:
-                "Break the assignment into smaller pieces. Explain the main idea in your own words before trying to memorize details.",
-
-            quiz:
-                "Close your notes and explain the main idea in your own words."
-        };
-
-    }
-
-
-    /*
-     * =========================================
-     * MAIN INTERACTION
-     * =========================================
-     */
-
-    helpButton.addEventListener(
-        "click",
-        function() {
+        function startStudy() {
 
             const question =
-                questionInput.value.trim();
+                document.getElementById("question").value.trim();
 
+            const result =
+                document.getElementById("result");
 
-            /*
-             * Reset previous error.
-             */
-
-            errorMessage.textContent = "";
-
-
-            /*
-             * Validate the input.
-             */
+            const resultText =
+                document.getElementById("resultText");
 
             if (question === "") {
 
-                errorMessage.textContent =
-                    "Enter a question or topic first.";
+                resultText.textContent =
+                    "Start by adding a question or topic. We'll take it one step at a time.";
 
-                questionInput.focus();
+            } else {
 
-                return;
+                resultText.textContent =
+                    "Your question has been captured. The next step will turn it into a study guide, quiz, or explanation.";
+
             }
 
-
-            /*
-             * Send the input through
-             * the processing layer.
-             */
-
-            const result =
-                processQuestion(question);
-
-
-            /*
-             * Send the processed information
-             * to the output layer.
-             */
-
-            focusText.textContent =
-                result.focus;
-
-            approachText.textContent =
-                result.approach;
-
-            quizText.textContent =
-                result.quiz;
-
-
-            /*
-             * Display the output.
-             */
-
-            output.classList.add("visible");
-
-
-            /*
-             * Move the user to the response.
-             */
-
-            output.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
+            result.classList.add("visible");
 
         }
-    );
 
-</script>
+    </script>
 
 </body>
 </html>
