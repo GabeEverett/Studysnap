@@ -1,0 +1,1017 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudySnap — A quieter way to study</title>
+
+    <style>
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #eef7f0;
+            color: #26382d;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow-x: hidden;
+        }
+
+        button,
+        textarea {
+            font: inherit;
+        }
+
+
+        /* =========================================
+           BACKGROUND
+        ========================================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 420px;
+            height: 420px;
+            top: -180px;
+            right: -120px;
+            border-radius: 50%;
+            background: #e2f0e5;
+            z-index: -1;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 320px;
+            height: 320px;
+            bottom: -160px;
+            left: -120px;
+            border-radius: 50%;
+            background: #e5f2e8;
+            z-index: -1;
+        }
+
+
+        /* =========================================
+           MAIN PAGE
+        ========================================= */
+
+        .page {
+            width: min(1050px, 90%);
+            margin: 0 auto;
+            padding: 42px 0 70px;
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 90px;
+
+            opacity: 0;
+            animation: fadeDown 0.8s ease forwards;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background: #5d8b6b;
+            color: white;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            box-shadow: 0 5px 14px rgba(70, 110, 80, 0.12);
+        }
+
+        .logo {
+            color: #315b42;
+            font-size: 23px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header-note {
+            color: #7b8d82;
+            font-size: 13px;
+        }
+
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero {
+            max-width: 760px;
+            margin-bottom: 48px;
+
+            opacity: 0;
+            transform: translateY(16px);
+
+            animation: fadeUp 0.9s ease 0.12s forwards;
+        }
+
+        .eyebrow {
+            display: inline-block;
+
+            margin-bottom: 18px;
+
+            color: #64806d;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            max-width: 720px;
+
+            color: #294936;
+
+            font-size: clamp(42px, 7vw, 72px);
+            line-height: 1.02;
+            letter-spacing: -3px;
+            font-weight: 600;
+        }
+
+        .hero p {
+            max-width: 610px;
+
+            margin-top: 24px;
+
+            color: #687a6f;
+
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           MAIN TOOL
+        ========================================= */
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.92);
+
+            border: 1px solid #d9e8dd;
+            border-radius: 28px;
+
+            padding: 34px;
+
+            box-shadow:
+                0 20px 55px rgba(57, 88, 66, 0.07);
+
+            opacity: 0;
+            transform: translateY(20px);
+
+            animation: fadeUp 0.9s ease 0.25s forwards;
+
+            transition:
+                box-shadow 0.35s ease,
+                transform 0.35s ease;
+        }
+
+        .tool-card:focus-within {
+            box-shadow:
+                0 24px 65px rgba(57, 88, 66, 0.10);
+        }
+
+
+        /* =========================================
+           TOOL HEADER
+        ========================================= */
+
+        .tool-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            gap: 30px;
+
+            margin-bottom: 25px;
+        }
+
+        .tool-title {
+            color: #315b42;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .tool-description {
+            max-width: 450px;
+
+            margin-top: 7px;
+
+            color: #829188;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #7a8d80;
+            font-size: 12px;
+
+            white-space: nowrap;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #8fb69b;
+
+            animation: breathe 3s ease-in-out infinite;
+        }
+
+
+        /* =========================================
+           LABEL
+        ========================================= */
+
+        .input-label {
+            display: block;
+
+            margin-bottom: 12px;
+
+            color: #607669;
+
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.9px;
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================
+           TEXT AREA
+        ========================================= */
+
+        textarea {
+            width: 100%;
+            min-height: 210px;
+
+            padding: 21px;
+
+            resize: vertical;
+
+            border: 1px solid #d5e4d9;
+            border-radius: 18px;
+
+            background: #f8fbf8;
+            color: #293b30;
+
+            outline: none;
+
+            font-size: 17px;
+            line-height: 1.65;
+
+            transition:
+                border-color 0.3s ease,
+                background 0.3s ease,
+                box-shadow 0.3s ease,
+                transform 0.3s ease;
+        }
+
+        textarea::placeholder {
+            color: #9aaa9f;
+
+            transition: opacity 0.25s ease;
+        }
+
+        textarea:focus {
+            border-color: #8fb69b;
+            background: #ffffff;
+
+            box-shadow:
+                0 0 0 4px rgba(143, 182, 155, 0.13);
+
+            transform: translateY(-1px);
+        }
+
+        textarea:focus::placeholder {
+            opacity: 0.45;
+        }
+
+
+        /* =========================================
+           BOTTOM CONTROLS
+        ========================================= */
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+
+            margin-top: 20px;
+        }
+
+        .guidance {
+            color: #84938a;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .guidance strong {
+            color: #66796d;
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           BUTTON
+        ========================================= */
+
+        .help-button {
+            border: none;
+            border-radius: 14px;
+
+            padding: 15px 24px;
+
+            background: #5d8b6b;
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            box-shadow:
+                0 6px 15px rgba(70, 110, 80, 0.10);
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .help-button:hover {
+            background: #4f7b5d;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 9px 21px rgba(70, 110, 80, 0.16);
+        }
+
+        .help-button:active {
+            transform: translateY(0);
+
+            box-shadow:
+                0 4px 10px rgba(70, 110, 80, 0.10);
+        }
+
+
+        /* =========================================
+           RESPONSE
+        ========================================= */
+
+        .response {
+            display: none;
+
+            margin-top: 34px;
+            padding-top: 32px;
+
+            border-top: 1px solid #e0ebe3;
+        }
+
+        .response.visible {
+            display: block;
+
+            animation: responseIn 0.65s ease forwards;
+        }
+
+        .response-label {
+            margin-bottom: 10px;
+
+            color: #71867a;
+
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .response h2 {
+            margin-bottom: 13px;
+
+            color: #315b42;
+
+            font-size: 26px;
+            letter-spacing: -0.5px;
+        }
+
+        .response p {
+            max-width: 680px;
+
+            color: #697b70;
+
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .response-actions {
+            display: flex;
+            gap: 10px;
+
+            margin-top: 22px;
+        }
+
+        .small-button {
+            border: 1px solid #d6e5da;
+            border-radius: 11px;
+
+            padding: 10px 15px;
+
+            background: #f7faf7;
+            color: #587261;
+
+            cursor: pointer;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .small-button:hover {
+            background: #edf5ef;
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================
+           COMPANION DETAIL
+        ========================================= */
+
+        .companion {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            margin-top: 28px;
+
+            color: #91a198;
+            font-size: 12px;
+        }
+
+        .companion-line {
+            width: 28px;
+            height: 1px;
+
+            background: #cbdacf;
+        }
+
+        .companion-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #91b79e;
+
+            animation: breathe 3s ease-in-out infinite;
+        }
+
+
+        /* =========================================
+           BOTTOM MESSAGE
+        ========================================= */
+
+        .bottom-message {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            margin-top: 42px;
+
+            color: #829188;
+
+            font-size: 13px;
+
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.55s forwards;
+        }
+
+        .bottom-message span {
+            color: #66816f;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            margin-top: 60px;
+
+            text-align: center;
+
+            color: #9aa79f;
+
+            font-size: 11px;
+            letter-spacing: 0.3px;
+
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.65s forwards;
+        }
+
+
+        /* =========================================
+           ANIMATIONS
+        ========================================= */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes responseIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes breathe {
+            0%,
+            100% {
+                opacity: 0.45;
+                transform: scale(0.9);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.15);
+            }
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 700px) {
+
+            .page {
+                width: 92%;
+                padding-top: 30px;
+            }
+
+            header {
+                margin-bottom: 60px;
+            }
+
+            .header-note {
+                display: none;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .tool-card {
+                padding: 23px;
+                border-radius: 21px;
+            }
+
+            .tool-header {
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .controls {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .help-button {
+                width: 100%;
+            }
+
+            .response-actions {
+                flex-wrap: wrap;
+            }
+
+        }
+
+
+        /* =========================================
+           REDUCED MOTION
+        ========================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <main class="page">
+
+        <!-- =====================================
+             HEADER
+        ====================================== -->
+
+        <header>
+
+            <div class="brand">
+
+                <div class="brand-mark">
+                    S
+                </div>
+
+                <div class="logo">
+                    StudySnap
+                </div>
+
+            </div>
+
+            <div class="header-note">
+                Learn at your own pace
+            </div>
+
+        </header>
+
+
+        <!-- =====================================
+             HERO
+        ====================================== -->
+
+        <section class="hero">
+
+            <div class="eyebrow">
+                Your study companion
+            </div>
+
+            <h1>
+                Let's figure this out together.
+            </h1>
+
+            <p>
+                Put a question, assignment, or idea here.
+                StudySnap helps turn what feels confusing into
+                something you can understand and work with.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================
+             MAIN TOOL
+        ====================================== -->
+
+        <section class="tool-card">
+
+            <div class="tool-header">
+
+                <div>
+
+                    <div class="tool-title">
+                        Start wherever you are.
+                    </div>
+
+                    <div class="tool-description">
+                        You don't need to have the question perfectly
+                        figured out before you begin.
+                    </div>
+
+                </div>
+
+
+                <div class="status">
+
+                    <div class="status-dot"></div>
+
+                    Ready when you are
+
+                </div>
+
+            </div>
+
+
+            <!-- INPUT -->
+
+            <label
+                class="input-label"
+                for="question"
+            >
+                What are you working on?
+            </label>
+
+
+            <textarea
+                id="question"
+                placeholder="Paste a question, assignment, or something you're trying to understand..."
+                aria-label="What are you working on?"
+            ></textarea>
+
+
+            <!-- CONTROLS -->
+
+            <div class="controls">
+
+                <div class="guidance">
+
+                    <strong>No perfect wording needed.</strong><br>
+
+                    Just start with what you have.
+
+                </div>
+
+
+                <button
+                    class="help-button"
+                    id="helpButton"
+                >
+                    Help me study
+                </button>
+
+            </div>
+
+
+            <!-- RESPONSE -->
+
+            <div
+                class="response"
+                id="response"
+            >
+
+                <div class="response-label">
+                    StudySnap response
+                </div>
+
+                <h2>
+                    Let's work through it.
+                </h2>
+
+                <p>
+                    This space represents the study guide,
+                    explanation, or quiz that StudySnap would
+                    create from your question. The goal isn't
+                    simply to give you an answer — it's to help
+                    you understand what you're working on.
+                </p>
+
+
+                <div class="response-actions">
+
+                    <button
+                        class="small-button"
+                        type="button"
+                    >
+                        Break it down
+                    </button>
+
+                    <button
+                        class="small-button"
+                        type="button"
+                    >
+                        Make a quiz
+                    </button>
+
+                    <button
+                        class="small-button"
+                        type="button"
+                    >
+                        Study guide
+                    </button>
+
+                </div>
+
+
+                <div class="companion">
+
+                    <div class="companion-line"></div>
+
+                    <div class="companion-dot"></div>
+
+                    <span>
+                        One step at a time.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             BOTTOM MESSAGE
+        ====================================== -->
+
+        <div class="bottom-message">
+
+            <span>✦</span>
+
+            You don't have to know where to start.
+
+            <span>✦</span>
+
+        </div>
+
+
+        <!-- =====================================
+             FOOTER
+        ====================================== -->
+
+        <footer>
+            StudySnap · A small tool for making studying feel manageable.
+        </footer>
+
+    </main>
+
+
+    <!-- =========================================
+         INTERACTION
+    ========================================== -->
+
+    <script>
+
+        const question = document.getElementById("question");
+        const helpButton = document.getElementById("helpButton");
+        const response = document.getElementById("response");
+
+
+        /*
+         * Show the prototype response.
+         */
+
+        helpButton.addEventListener("click", () => {
+
+            const text = question.value.trim();
+
+
+            /*
+             * If the user hasn't entered anything,
+             * return their attention to the input.
+             */
+
+            if (text === "") {
+
+                question.focus();
+
+                question.animate(
+                    [
+                        {
+                            transform: "translateX(0)"
+                        },
+                        {
+                            transform: "translateX(-3px)"
+                        },
+                        {
+                            transform: "translateX(3px)"
+                        },
+                        {
+                            transform: "translateX(0)"
+                        }
+                    ],
+                    {
+                        duration: 250,
+                        easing: "ease-out"
+                    }
+                );
+
+                return;
+            }
+
+
+            /*
+             * Change the button briefly
+             * to make the interaction feel responsive.
+             */
+
+            helpButton.textContent = "Working with it...";
+
+            helpButton.style.opacity = "0.75";
+
+
+            setTimeout(() => {
+
+                response.classList.add("visible");
+
+                helpButton.textContent = "Help me study";
+
+                helpButton.style.opacity = "1";
+
+
+                setTimeout(() => {
+
+                    response.scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest"
+                    });
+
+                }, 100);
+
+            }, 650);
+
+        });
+
+
+        /*
+         * Keep the textarea comfortable to use.
+         */
+
+        question.addEventListener("keydown", (event) => {
+
+            if (
+                event.key === "Enter" &&
+                (event.metaKey || event.ctrlKey)
+            ) {
+
+                helpButton.click();
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
+```
