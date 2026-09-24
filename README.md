@@ -160,28 +160,44 @@ These entries will be updated as the prototype is tested and broken.
 
 ## Break 1
 
-**Date:** TBD  
-**Commit:** TBD  
-**What broke:** TBD  
-**What changed:** TBD  
+## Break 1
+
+**Date:** September 23, 2026  
+**Commit:** [292e461]  
+**What broke:** Different types of questions were not consistently being recognized by the processing layer. Some inputs returned the same general response instead of the expected subject-specific response.
+
+**What changed:** I tested different kinds of questions and adjusted the processing logic to better recognize subject keywords. I decided to keep the prototype intentionally simple rather than adding unnecessary features. 
 
 ---
 
 ## Break 2
 
-**Date:** TBD  
-**Commit:** TBD  
-**What broke:** TBD  
-**What changed:** TBD  
+## Break 2
 
+**Date:** September 23, 2026
+
+**Commit:** 292e461
+
+**What broke:**  
+When I submitted the tool with an empty input, StudySnap could not process the request because there was no question or topic to work with.
+
+**What changed:**  
+I added an empty-input check so StudySnap stops before processing and tells the user to enter a question or topic.
 ---
 
 ## Break 3
 
-**Date:** TBD  
-**Commit:** TBD  
-**What broke:** TBD  
-**What changed:** TBD  
+## Break 3
+
+**Date:** September 23, 2026
+
+**Commit:** 292e461
+
+**What broke:**  
+Testing different subjects showed that the processing system did not consistently identify the intended subject. History questions were recognized, while some math and science questions fell back to the general response.
+
+**What changed:**  
+I expanded the keyword-based processing rules and kept the general response as a fallback when the system cannot confidently identify a subject.
 
 ---
 
